@@ -1,0 +1,8 @@
+number,name,Python,Math
+1001,xiaoming,77,87
+1002,xiaohong,88,82
+1003,xiaohua,99,91
+,number,name,Python,Math,sum
+0,1001,xiaoming,77,87,164
+1,1002,xiaohong,88,82,170
+2,1003,xiaohua,99,91,190

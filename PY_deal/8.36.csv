@@ -1,0 +1,35 @@
+,Fruit,FruitShop,_Fruit__color,__builtins__,__doc__,__file__,__name__,__package__,a,gc,np,parent,pd,shop
+0,,,red,,,,,,,,,<__main__.FruitShop instance at 0x7f3f9304d878>,,
+1,__main__.Fruit,__main__.FruitShop,,<module '__builtin__' (built-in)>,,/home/eacaen/PY_deal/hello.py,__main__,,"[{'parent': <__main__.FruitShop instance at 0x7f3f9304d878>, '_Fruit__color': 'red'}, {'shop': <__main__.FruitShop instance at 0x7f3f9304d878>, 'a': [...], 'FruitShop': <class __main__.FruitShop at 0x7f3f92dc2050>, 'f':             Fruit           FruitShop _Fruit__color  \
+0             NaN                 NaN           red   
+1  __main__.Fruit  __main__.FruitShop           NaN   
+
+                        __builtins__  __doc__                       __file__  \
+0                                NaN      NaN                            NaN   
+1  <module '__builtin__' (built-in)>      NaN  /home/eacaen/PY_deal/hello.py   
+
+   __name__  __package__                                                  a  \
+0       NaN          NaN                                                NaN   
+1  __main__          NaN  [{u'parent': <__main__.FruitShop instance at 0...   
+
+                         gc  \
+0                       NaN   
+1  <module 'gc' (built-in)>   
+
+                                                  np  \
+0                                                NaN   
+1  <module 'numpy' from '/usr/lib/python2.7/dist-...   
+
+                                            parent  \
+0  <__main__.FruitShop instance at 0x7f3f9304d878>   
+1                                              NaN   
+
+                                                  pd  \
+0                                                NaN   
+1  <module 'pandas' from '/usr/lib/python2.7/dist...   
+
+                                              shop  
+0                                              NaN  
+1  <__main__.FruitShop instance at 0x7f3f9304d878>  
+
+[2 rows x 14 columns], '__builtins__': <module '__builtin__' (built-in)>, '__file__': '/home/eacaen/PY_deal/hello.py', '__package__': None, 'Fruit': <class __main__.Fruit at 0x7f3f93042ef0>, 'gc': <module 'gc' (built-in)>, 'pd': <module 'pandas' from '/usr/lib/python2.7/dist-packages/pandas/__init__.pyc'>, 'np': <module 'numpy' from '/usr/lib/python2.7/dist-packages/numpy/__init__.pyc'>, '__name__': '__main__', '__doc__': None}]",<module 'gc' (built-in)>,<module 'numpy' from '/usr/lib/python2.7/dist-packages/numpy/__init__.pyc'>,,<module 'pandas' from '/usr/lib/python2.7/dist-packages/pandas/__init__.pyc'>,<__main__.FruitShop instance at 0x7f3f9304d878>
