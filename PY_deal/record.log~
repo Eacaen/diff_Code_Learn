@@ -1,8 +1,0 @@
-2016-12-04 22:16:22
-hello world hello 
-hello china
-goodbye
-Traceback (most recent call last):
-  File "/home/eacaen/PY_deal/pl.py", line 33, in <module>
-    f = open(r"./hih.h",'r')
-IOError: [Errno 2] No such file or directory: './hih.h'
