@@ -63,19 +63,25 @@ ax1.set_ylim(-2.5,1)
 ax1.set_yticks(Z) #设置刻度
 ax1.set_yticklabels([0.1,  0.2,  0.3,  0.4,  0.5,  0.6,  0.7,  0.8,  0.9 , 1.0])
 
+plt.text(0.05, 1.07,'FFFFFFFFFFFFFFF',
+         fontsize=14,
+         transform = ax1.transAxes)
 
 ax2 = ax1.twinx()
 ax2.set_ylabel('Z ')
 ax2.set_ylim(-2.5,1)
 
 ax2 = ax1.twiny()  # this is the important function
-ax2.set_xlabel('Y ')
+ax2.set_xlabel('Y',fontsize=10)
 yyy = list(set([int(x) for x in Y]))
 yyy.sort()
 
 yyy = np.arange(yyy[0],yyy[-1]+1,(yyy[-1] +1 - yyy[0])/5.0)
 print 'yyy',yyy
 # ax2.set_xticks(yy) #设置刻度
+plt.text(0.05, 1.07,'FFFFFFFFFFFFFFF',
+         fontsize=14,
+         transform = ax1.transAxes)
 ax2.set_xticklabels(yyy)
 
 plt.show()

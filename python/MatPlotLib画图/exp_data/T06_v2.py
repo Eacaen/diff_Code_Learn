@@ -6,8 +6,11 @@
 #增加图例换行
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 import pandas as pd
 import math
+
+zhfont_song = matplotlib.font_manager.FontProperties(fname='C:\Windows\Fonts\simsun.ttc')
 
 def _list_mut(list1,list2):
     return list(map(lambda x: x[0] * x[1], zip(list1, list2)))
@@ -33,6 +36,16 @@ Fig_name = [
     'fig_7',
     'fig_8',
 
+]
+title_name = [
+    u'YK2563 - 1系列TTCI',
+    u'YK2563 - 2系列TTCI',
+    u'DK2564 - 1系列TTCI',
+    u'DK2564 - 2系列TTCI',
+    u'JT2566 - 1系列TTCI',
+    u'JT2566 - 2系列TTCI',
+    u'WB2567 - 1系列TTCI',
+    u'WB2567 - 2系列TTCI'
 ]
 for i in range(1,len(data.columns)+1):
 #######################################################################
@@ -99,6 +112,15 @@ for i in range(1,len(data.columns)+1):
     ax1.set_yticklabels([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
 
 #######################################################################
+# 添加标题
+# 有点BUG 参考fit_cover2
+#######################################################################
+    plt.text(0.05, 1.07, title_name[i-1],
+         fontsize=14,
+         transform=ax1.transAxes,
+        fontproperties=zhfont_song)
+
+#######################################################################
 # 设置 副X Y轴 的显示
 #######################################################################
 
@@ -107,7 +129,7 @@ for i in range(1,len(data.columns)+1):
     ax2.set_ylim(-2.5, 1)
 
     ax2 = ax1.twiny()  # this is the important function
-    ax2.set_xlabel('Yk ')
+    ax2.set_xlabel('Yk ',fontsize=10)
     yyy = list(set([int(x) for x in Yk]))
     yyy.sort()
 
@@ -116,8 +138,9 @@ for i in range(1,len(data.columns)+1):
 #######################################################################
 # 设置图片结果显示,保存
 #######################################################################
-    # fig.savefig(Fig_name[i-1])
-    plt.show()
+    fig.savefig(Fig_name[i-1])
+
+    # plt.show()
 
 #######################################################################
 # 设置处理后数据结果保存
