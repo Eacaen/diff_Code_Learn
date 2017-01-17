@@ -1,0 +1,66 @@
+# -*- coding: utf-8 -*-
+# __author__ = 'eacaen'
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import math
+
+Length = 10
+
+def _list_cut(list1, list2):
+        return list(map(lambda x: x[0] - x[1], zip(list1, list2)))
+def _Caculate_Q(x):
+    return 1/x*math.log(0.6/0.5)
+def _list_division(x):
+    return x / (Length+1) * 1.0
+# def _list_Yk(x):
+
+def _list_Zk(x):
+    return math.log( math.log(1/(1-x) ) )
+
+def _list_mut(list1,list2):
+    return list(map(lambda x: x[0] * x[1], zip(list1, list2)))
+# data = pd.read_excel("T06_10.xlsx",encoding='gb2312',sheetname=0)
+
+data = pd.read_excel("T06_10.xlsx",sheetname=0)
+# print data
+Q = data.iloc[10,:]
+Q = [num*1e-4 for num in Q]
+# print Q
+Epsilon = map(_Caculate_Q,list(Q))
+print 'Epsilon',Epsilon
+
+#####################################
+# print data.columns,data[1][0:10]
+Ft = [num*1.0/11 for num in range(1,11)]
+Alpha_all = []
+Beta_all =[]
+for i in range(1,9):
+    T = data[i][0:10]
+    T = list(T)
+    T.sort()
+
+    Yk = map(math.log , [num -Epsilon[i-1] for num in T] )
+    # print Yk
+    # Zk = map(_list_Zk,Ft)
+    # print Zk
+    Zk = [math.log( math.log(1/(1-x) ) ) for x in Ft]
+    Alpha1 = Length*sum(_list_mut(Yk,Zk)) - sum(Yk) * sum(Zk)
+    Alpha2 = Length*sum(_list_mut(Yk,Yk)) - sum(Yk) * sum(Yk)
+    Alpha = Alpha1/Alpha2
+    Alpha_all.append(Alpha)
+    # print Alpha
+    Beta_pre = (Alpha * sum(Yk) - sum(Zk))/ (Alpha*10)
+
+    Beta = math.exp(Beta_pre)
+    # print Beta
+    Beta_all.append(Beta)
+
+# print Alpha_all,Beta_all
+dir = {'Epsilon':Epsilon,'Alpha':Alpha_all,'Beta':Beta_all}
+frame = pd.DataFrame(dir)
+print frame
+frame.to_excel('result.xlsx')
+
+
+
