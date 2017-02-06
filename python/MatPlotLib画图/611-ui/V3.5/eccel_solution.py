@@ -11,23 +11,21 @@ import pandas as pd
 import math
 import platform
 
-sysstr = platform.system()
-if(sysstr =="Windows"):
-    zhfont_song = matplotlib.font_manager.FontProperties(fname='C:\Windows\Fonts\simsun.ttc')
-elif(sysstr == "Linux"):
-    zhfont_song = matplotlib.font_manager.FontProperties(fname='/usr/share/fonts/Windows/Fonts/simsun.ttc')
-
 
 def _list_mut(list1,list2):
     return list(map(lambda x: x[0] * x[1], zip(list1, list2)))
 
+def Soluton(name_in ,name_out = 'result',SHOW = False , SAVE = False):
+    sysstr = platform.system()
+    if (sysstr == "Windows"):
+        zhfont_song = matplotlib.font_manager.FontProperties(fname='C:\Windows\Fonts\simsun.ttc')
+    elif (sysstr == "Linux"):
+        zhfont_song = matplotlib.font_manager.FontProperties(fname='/usr/share/fonts/Windows/Fonts/simsun.ttc')
+    #
+    # name_in = unicode(name_in)
+    # name_out = unicode(name_out)
 
-def Soluton(name_in = '/home/eacaen/PY_deal/GUI/611-paji/T06_10.xlsx'
-            ,name_out = 'result',SHOW = False , SAVE = False):
-    name_in = unicode(name_in)
-    name_out = unicode(name_out)
     data = pd.read_excel(name_in,sheetname=0)
-
     Fig_name = list(data.columns)
 
     Q = data.iloc[10,:]
@@ -119,7 +117,6 @@ def Soluton(name_in = '/home/eacaen/PY_deal/GUI/611-paji/T06_10.xlsx'
 
     dir = {'Epsilon':Epsilon,'Alpha':Alpha_all,'Beta':Beta_all}
     frame = pd.DataFrame(dir)
-    # frame.to_excel(name_out+'.xlsx')
     return frame
 
 

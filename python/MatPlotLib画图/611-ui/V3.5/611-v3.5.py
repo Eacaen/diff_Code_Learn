@@ -37,9 +37,14 @@ class FindAndReplaceDlg(QDialog , QMainWindow,pilao.Ui_Dialog):
 
     def Start(self):
         self.clear_result()
+
         path_in = self.In_lineEdit.text()
+
         if path_in == "":
-            path_in = '/home/eacaen/PY_deal/GUI/611-paji/T06_10.xlsx'
+            # path_in = '/home/eacaen/PY_deal/GUI/611-paji/T06_10.xlsx'
+            # path_in = 'D:/diff_Code_Learn/python/MatPlotLib画图/611-ui/V3.5/T06_101.xlsx'
+            QMessageBox.warning(self, "File Error", unicode('Must choose a input file(*.xlsx *.xls)'))
+            return
 
         path_out = self.Out_lineEdit.text()
         if path_out == "":
@@ -48,21 +53,19 @@ class FindAndReplaceDlg(QDialog , QMainWindow,pilao.Ui_Dialog):
         Show_Fig = self.Fig_show_checkBox.isChecked()
         Save_Fig = self.Fig_save_checkBox.isChecked()
 
+        path_in = unicode(path_in.toUtf8(), 'utf8', 'ignore').encode('gb2312')
+        print path_in
+
         if os.path.exists(path_in):
             try:
-                self.Solu_pushButton.setEnabled(0)
-                self.File_choose_Button.setEnabled(0)
-                self.Save_Button.setEnabled(0)
+                self.fun_button(0)
 
                 frame = eccel_solution.Soluton(path_in, path_out,Show_Fig,Save_Fig)
                 self.__frame = frame
 
             except :
                 QMessageBox.warning(self, "File Error", unicode('The format of the file is error'))
-
-                self.Solu_pushButton.setEnabled(1)
-                self.File_choose_Button.setEnabled(1)
-                self.Save_Button.setEnabled(1)
+                self.fun_button(1)
 
             else:
                 self.tableWidget.setHorizontalHeaderLabels(frame.columns)
@@ -75,9 +78,7 @@ class FindAndReplaceDlg(QDialog , QMainWindow,pilao.Ui_Dialog):
                         newItem = QTableWidgetItem( QString("%1").arg(cnt,0,'r',4) )
                         self.tableWidget.setItem(i, j, newItem)
 
-                self.Solu_pushButton.setEnabled(1)
-                self.File_choose_Button.setEnabled(1)
-                self.Save_Button.setEnabled(1)
+                self.fun_button(1)
         else:
             QMessageBox.warning(self, "Path Error",unicode('The path error'))
             self.In_lineEdit.selectAll()
@@ -113,12 +114,19 @@ class FindAndReplaceDlg(QDialog , QMainWindow,pilao.Ui_Dialog):
                 newItem = QTableWidgetItem(QString(" "))
                 self.tableWidget.setItem(i, j, newItem)
 
+    def fun_button(self,BOOL):
+        self.Solu_pushButton.setEnabled(BOOL)
+        self.File_choose_Button.setEnabled(BOOL)
+        self.Save_Button.setEnabled(BOOL)
+        self.Fig_save_checkBox.setEnabled(BOOL)
+        self.Fig_show_checkBox.setEnabled(BOOL)
+
 if __name__ == "__main__":
     import sys
 
     app = QApplication(sys.argv)
     form = FindAndReplaceDlg()
-    form.updateUi()
+    # form.updateUi()
     form.show()
     app.exec_()
-
+    # sys.exit(app.exec_())

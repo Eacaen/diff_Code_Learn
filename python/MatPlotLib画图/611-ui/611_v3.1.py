@@ -3,7 +3,7 @@
 import sys
 from PyQt4 import QtCore, QtGui, uic
 import eccel_solution
-qtCreatorFile = "/home/eacaen/PY_deal/GUI/611-paji/611.ui" # Enter file here.
+qtCreatorFile = "611.ui" # Enter file here.
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
@@ -31,4 +31,4 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     window = MyApp()
     window.show()
-sys.exit(app.exec_())
+    sys.exit(app.exec_())
