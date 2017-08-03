@@ -1,0 +1,18 @@
+%# -*- coding: utf-8 -*-
+%!TEX encoding = UTF-8 Unicode
+\documentclass{article}
+\usepackage[UTF8]{ctex}
+   \title{知乎---爬虫}
+\begin{document}
+   \maketitle
+   \section{模拟登录} 
+  \begin{enumerate}
+    \item 知乎爬取时必须带上header
+    \item \_xref 可以从登录网页的源码中提取，但是提取和登陆的网页必须是同一个。urllib2.urlopen 是打开不同的，可以使用requests库建立session。
+  \end{enumerate}
+
+    \section{爬取 follow , 问题等内容}
+    知乎网页是动态加载问题，怎么解决？
+      
+    
+\end{document} 

@@ -24,7 +24,7 @@ logUrl2  ="https://unpkg.zhimg.com/za-js-sdk@2.3.2/dist/zap.js"
 # print cont
 
 session = requests.Session()
-r = requests.post(logUrl2 , headers=follo_headers , verify = False)
+r = requests.post(logUrl , headers=follo_headers , verify = False)
 cont= r.text
 
 soup =BeautifulSoup(cont, "lxml")
