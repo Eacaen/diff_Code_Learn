@@ -2,15 +2,13 @@
 import requests
 import json
 
-url = 'http://www.toutiao.com/api/pc/focus/'
-wbdata = requests.get(url).text
-# print wbdata
+class mmm(object):
+	"""docstring for mmm"""
+	dd = 'dwedwef'
+	def __init__(self, arg):
+		super(mmm, self).__init__()
+		self.arg = arg
 
-data = json.loads(wbdata)
-news = data['data']['pc_feed_focus']
-
-for n in news:    
-  title = n['title']    
-  img_url = n['image_url']    
-  url = n['media_url']    
-  print url,title,img_url.decode("gbk")
+if __name__ == '__main__':
+	n = mmm(6)
+	print mmm.dd

@@ -66,7 +66,7 @@ with open(img_url_list_file , 'r ') as f:
 	red = f.read()
 patton = re.compile('(https://.*?)\n')
 img_url_list = re.findall(patton , red)
-print img_url_list
+# print img_url_list
 
 offset = 0
 name = len(os.listdir(dir))
