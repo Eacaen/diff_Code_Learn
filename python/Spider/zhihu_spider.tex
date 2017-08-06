@@ -1,23 +1,29 @@
 %# -*- coding: utf-8 -*-
 %!TEX encoding = UTF-8 Unicode
 \documentclass{article}
+\usepackage{titlesec}
+\titleformat*{\section}{\centering}
 \usepackage[UTF8]{ctex}
-   \title{知乎---爬虫}
+    \title{爬虫}
 \begin{document}
    \maketitle
-   \section{模拟登录} 
+   \section*{\Large 知乎---爬虫}
+   \subsection{模拟登录} 
   \begin{enumerate}
     \item 知乎爬取时必须带上header。
     \item \_xref 可以从登录网页的源码中提取，但是提取和登陆的网页必须是同一个。urllib2.urlopen 是打开可能不同的，可以使用requests库建立session。
   \end{enumerate}
 
-    \section{爬取 follow , 问题等内容}
+    \subsection{爬取 follow , 问题等内容}
     【部分知乎问题已有答案了】
 
     知乎网页是动态加载问题，怎么解决？
-    以爬取问题或关注人为例，通过开发者工具中的Network -- XHR / Js 选项，向下拉取页面，可以看出网页在加载时是通过 offset 来获取新的内容（不是在类似batch的请求中，\textbf{注意}），复制出URL备用。
+    以爬取问题或关注人为例，通过开发者工具中的Network -- XHR / Js 选项，向下拉取页面，可以看出网页在加载时是通过  offset 和  start\_offset 来控制起始的爬取网页，
+     来获取新的内容（在XHR中网页不是在类似batch的请求中，\textbf{注意：} 如果要爬取全部内容  start\_offset = 0 而不是  3，offset  与显示的不同），然后复制出URL备用。
+\\
 
     编写header, 除了基本header外，必须还要有 authorization ，authorization貌似在不同的爬取需求中都是相同的，但是header必须包含它。打开网页后的内容好像是 json 格式， 使用 json.loads(url.content) 将内容转化为字典形式。
+\\
 
     通过正则表达式 或是 BeautifulSoup 可以提取需要的内容，在提取速度和存储方式上，文件操作等方面有待加强。
       

@@ -59,20 +59,20 @@ file_name = str(follo_headers['Referer'].split('/')[-1])
 dir = str("./")+file_name+str("/")
 ensure_dir(dir)
 
-img_url_list_file = dir + file_name +'.txt'
-ensure_file(img_url_list_file)
+img_url_list_txt = dir + file_name +'.txt'
+ensure_file(img_url_list_txt)
 
-with open(img_url_list_file , 'r ') as f:
+with open(img_url_list_txt , 'r ') as f:
 	red = f.read()
 patton = re.compile('(https://.*?)\n')
 img_url_list = re.findall(patton , red)
 # print img_url_list
 
-offset = 0
+offset = 3
 name = len(os.listdir(dir))
 
 rand = 1
-while 1:#offset <= 60:
+while offset <= 10:
 
 	get_url = 'https://www.zhihu.com/api/v4/questions/49364343/answers?sort_by=default&include=data%5B%2A%5D.is_normal%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Cmark_infos%2Ccreated_time%2Cupdated_time%2Creview_info%2Crelationship.is_authorized%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cupvoted_followees%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%3F%28type%3Dbest_answerer%29%5D.topics&limit=20&offset='+ str(offset)
 
@@ -86,8 +86,16 @@ while 1:#offset <= 60:
 		print '-----------------------------------------end of question -------------------------------------------'
 		break
 
+
 for i in range(len(following)):
-	img_urls = re.findall('img src="(https:.*?)"', following[i].encode("utf-8"))
+	img_patton = re.compile(r'img.*?src="(https:.*?)".*?data-original="(https:.*?)".*?data-actualsrc="(https:.*?)"')
+	img_urls_truple = re.findall( img_patton , following[i].encode("utf-8")) #'img src="(https:.*?)"'
+
+	img_urls = set()
+	for i in img_urls_truple:
+		for j in i:
+			img_urls.add(j)
+	img_urls = list(img_urls)
 
 	for i in range(len(img_urls)):
 		if img_urls[i]   in img_url_list:
