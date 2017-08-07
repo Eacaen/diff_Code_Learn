@@ -16,10 +16,13 @@ def ensure_file( f ):
 
 class zhihu_Img_spider(object):
 	"""docstring for zhihu_Img_spider"""
-	def __init__(self, url , question_num , offset = 0 , start_offset = 0 ,  img_patton = None):
+	def __init__(self, question_num , url = None , offset = 0 , start_offset = 0 ,  img_patton = None):
 		super(zhihu_Img_spider, self).__init__()
 		self.question_num = question_num
-		self.url = url 
+		if url == None:
+			self.url = 'https://www.zhihu.com/api/v4/questions/'+ str(self.question_num) + '/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Cmark_infos%2Ccreated_time%2Cupdated_time%2Creview_info%2Crelationship.is_authorized%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cupvoted_followees%3Bdata%5B*%5D.author.follower_count%2Cbadge%5B%3F(type%3Dbest_answerer)%5D.topics&limit=20&offset='
+		else:
+			self.url = url 
 		self.following = [ ]
 
 		self.headers = {
@@ -44,7 +47,7 @@ class zhihu_Img_spider(object):
 	
 		self.offset = offset
 		self.start_offset  = start_offset 
-		self.img_name = len(os.listdir(self.dir))
+		self.img_name = len(self.img_url_list) + 1 #len(os.listdir(self.dir))
 
 		self.img_patton = img_patton
 	def get_content(self , url):
@@ -115,20 +118,22 @@ class zhihu_Img_spider(object):
 					la = str(img_urls[i].split('.')[-1])
 					if saveImg:
 						self.saveImg(img_urls[i] , mdir = self.dir , filename = str(self.img_name) + '.'+ la)
-						self.img_name = self.img_name +1
+						
 						print self.img_name, '    ', la
 
 					url_write = str(self.img_name) + '. ' + str( img_urls[i] ) + '\n'
 					self.Write_file(url_write, mdir= self.dir , filename = self.file_name +'.txt' , mode='a')
+					self.img_name = self.img_name +1
 
-					
+		# url_write = '\n\n------------------------*------------------------*------------------------\n\n'
+		# self.Write_file(url_write, mdir= self.dir , filename = self.file_name +'.txt' , mode='a')			
 
 if __name__ == '__main__':
 	# url = 'https://www.zhihu.com/api/v4/questions/20902967/answers?sort_by=default&include=data%5B%2A%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Cmark_infos%2Ccreated_time%2Cupdated_time%2Creview_info%2Crelationship.is_authorized%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cupvoted_followees%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%3F%28type%3Dbest_answerer\
 	# %29%5D.topics&limit=20&offset='
 
-	url = 'https://www.zhihu.com/api/v4/questions/12345678/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Cmark_infos%2Ccreated_time%2Cupdated_time%2Creview_info%2Crelationship.is_authorized%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cupvoted_followees%3Bdata%5B*%5D.author.follower_count%2Cbadge%5B%3F(type%3Dbest_answerer)%5D.topics&limit=20&offset='
-	zhu_sp = zhihu_Img_spider(url, question_num = 12345678 , offset = 500 , start_offset =0)
+	ques_code = 25405208 
+	zhu_sp = zhihu_Img_spider( question_num = ques_code , offset = 40 , start_offset = 0)
 
 	# zhu_sp.img_patton = re.compile( 'img src="(https:.*?)"' )
 	zhu_sp.img_patton = re.compile(r'img.*?src="(https:.*?)".*?data-original="(https:.*?)".*?data-actualsrc="(https:.*?)"')
@@ -139,6 +144,6 @@ if __name__ == '__main__':
 	# zhu_sp.img_patton = re.compile(r'img.*?src="(https:.*?)".*?data-original="(https:.*?)".*?"(https:.*?)"')
 
 	zhu_sp.get_following_list( )
-	zhu_sp.downloadImg_or_writeFile(saveImg=0)
+	zhu_sp.downloadImg_or_writeFile(saveImg=1)
 	# for i in zhu_sp.img_url_list:
 	# 	print i
