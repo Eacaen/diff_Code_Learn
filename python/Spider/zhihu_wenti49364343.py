@@ -105,7 +105,7 @@ for i in range(len(following)):
 
 		if img_urls[i] not in img_url_list:
 			la = str(img_urls[i].split('.')[-1])
-			saveImg(img_urls[i] , mdir=dir , filename = str(name) + '.'+ la)
+			# saveImg(img_urls[i] , mdir=dir , filename = str(name) + '.'+ la)
 
 			url_write = str(name) + '. ' + str( img_urls[i] ) + '\n'
 			Write_file(url_write, mdir=dir , filename = file_name +'.txt' , mode='a')

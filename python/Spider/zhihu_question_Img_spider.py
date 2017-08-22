@@ -28,12 +28,12 @@ class zhihu_Img_spider(object):
 		self.headers = {
 		"Origin" : "https://www.zhihu.com",
 		"Host":"www.zhihu.com",
-		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0",
+		"User-Agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0",
 		"Referer" : "https://www.zhihu.com/question/" + str( self.question_num) ,
 		 "Accept-Language":"zh-CN,zh;q=0.8",
 		"Connection" : "keep-alive",
 		"Accept-Encoding":"gzip, deflate, br",
-		"authorization":"Bearer Mi4wQUlCQ0pOSHVJQXdBVUFJSlVSSWhEQmNBQUFCaEFsVk43MmVoV1FCbklIYzJIZmoyY2lELWRIdGZxZWlzZ3ZqSDRB|1501158127|bcb9ccfecd888845e2e5d75c110617c33062a836",
+		"authorization":"oauth c3cef7c66a1843f8b3a9e6a1e3160e20",
 				}
 
 		self.file_name = str(self.headers['Referer'].split('/')[-1])
@@ -51,7 +51,8 @@ class zhihu_Img_spider(object):
 
 		self.img_patton = img_patton
 	def get_content(self , url):
-		r = requests.get( url  , headers = self.headers )
+		proxy = {"http": "http://144.52.191.37:53281", "https": "49.87.49.137:8118"}
+		r = requests.get( url  , headers = self.headers )#, proxies = proxy  )
 		cont= r.text 
 		txt=json.loads(cont)
 		return txt
@@ -119,8 +120,7 @@ class zhihu_Img_spider(object):
 					if saveImg:
 						self.saveImg(img_urls[i] , mdir = self.dir , filename = str(self.img_name) + '.'+ la)
 						
-						print self.img_name, '    ', la
-
+					print self.img_name, '    ', la
 					url_write = str(self.img_name) + '. ' + str( img_urls[i] ) + '\n'
 					self.Write_file(url_write, mdir= self.dir , filename = self.file_name +'.txt' , mode='a')
 					self.img_name = self.img_name +1
@@ -132,8 +132,8 @@ if __name__ == '__main__':
 	# url = 'https://www.zhihu.com/api/v4/questions/20902967/answers?sort_by=default&include=data%5B%2A%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Cmark_infos%2Ccreated_time%2Cupdated_time%2Creview_info%2Crelationship.is_authorized%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%2Cupvoted_followees%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%3F%28type%3Dbest_answerer\
 	# %29%5D.topics&limit=20&offset='
 
-	ques_code = 25405208 
-	zhu_sp = zhihu_Img_spider( question_num = ques_code , offset = 40 , start_offset = 0)
+	ques_code = 43551423 
+	zhu_sp = zhihu_Img_spider( question_num = ques_code , offset = 10000 , start_offset = 0)
 
 	# zhu_sp.img_patton = re.compile( 'img src="(https:.*?)"' )
 	zhu_sp.img_patton = re.compile(r'img.*?src="(https:.*?)".*?data-original="(https:.*?)".*?data-actualsrc="(https:.*?)"')
@@ -144,6 +144,6 @@ if __name__ == '__main__':
 	# zhu_sp.img_patton = re.compile(r'img.*?src="(https:.*?)".*?data-original="(https:.*?)".*?"(https:.*?)"')
 
 	zhu_sp.get_following_list( )
-	zhu_sp.downloadImg_or_writeFile(saveImg=1)
+	zhu_sp.downloadImg_or_writeFile(saveImg=0)
 	# for i in zhu_sp.img_url_list:
 	# 	print i

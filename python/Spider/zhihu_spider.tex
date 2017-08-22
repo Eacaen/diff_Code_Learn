@@ -2,6 +2,10 @@
 %!TEX encoding = UTF-8 Unicode
 \documentclass{article}
 \usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{pythonhighlight}
+
+
 \titleformat*{\section}{\centering}
 \usepackage[UTF8]{ctex}
     \title{爬虫}
@@ -27,5 +31,65 @@
 
     通过正则表达式 或是 BeautifulSoup 可以提取需要的内容，在提取速度和存储方式上，文件操作等方面有待加强。
       
-    
+      \subsection{多线程 }
+      \subsubsection{反爬措施防止被屏蔽}
+      使用多线程多次爬取后知乎服务器貌似会屏蔽访问，不知道是  IP 的问题还是什么，如果还能在浏览器正常打开知乎的话可以采用更换 headers 中 authorization 的方法进行访问。
+
+      或是使用IP代理？
+
+       \subsubsection{多线程的顺序问题}
+        多线程或多进程由于是并发，在访问网页时不能按 Page 顺序访问，在下载排序命名时也会顺序错乱。 直接采用 \textbf{全局变量}并加\textbf{多线程，多线进锁}，这样虽然会影响 Class 的 独立性 但是可以使得顺序不错乱且按照顺序保存。
+
+       【 标号顺序不乱但是内容顺序仍有可能混乱，不一定的按照网页内容了。】
+
+     \subsection{多进程 }
+          \subsubsection{多进程全局变量共享}
+              global 变量和Queue模块中的Queue() 在全局变量中貌似不起作用，使用 multiprocessing 中的 各个模块来在进程中同步信号。
+                \begin{python}
+from multiprocessing import Process, JoinableQueue,Lock ,Queue , Pool , Value
+counter = Value('i', 0)
+counter.value += 1  
+                \end{python}
+
+            \subsubsection{使用进程池可以退出}
+                当爬取网页太多时，进程会也不停止也不报错。 尝试使用进程池可以正常退出。
+                \begin{python}
+pool  = Pool( multiprocessing.cpu_count() )
+for i in xrange( 2 * multiprocessing.cpu_count() ) :
+        pool.apply_async( func , args = ( ) )
+pool.close()  
+pool.join() 
+                \end{python}
+
+
+    \section*{\Large Scrapy---爬虫}
+    \subsection{Scrapy}
+      \begin{enumerate}
+            \item Scrapy 是一种爬虫框架 / 爬虫引擎， 你需要在里面填上爬虫函数，并对数据下载，提取，处理， 存储。
+            \item Scrapy 中所以爬虫都继承自  scrapy.spiders.Spider。另外有别的作用更加细分的爬虫如 Crawlspider 通过设置自身的 rules 从爬去的网页中提取URL 继续爬取。
+            \item Scrapy 调试在 Shell 中， 开发的话应该掌握。Xpath() 语法用于对数据进行提取，类似正则。
+            \item items.py 中定义各个数据的存储容器。pipeline.py 进行对item 数据的查重，丢弃，验证，保存工作。
+      \end{enumerate}
+
+    \subsection{Tips of Scrapy}
+      \subsubsection{不使用命令行启动}
+          在根目录下创建 main.py 
+          \begin{python}
+                from scrapy import cmdline
+                cmdline.execute('scrapy crawl Spider_name'.split())
+          \end{python}
+
+     \subsubsection{ 爬虫开始，结束时传递参数 }
+          Scrapy 默认在开始结束时运行：
+          \begin{python}
+                def open_spider(self, spider):
+                def close_spider(self, spider):
+          \end{python}
+
+          与Spider.py 中的 Super 结合使用
+          \begin{python}
+            super(Spider_name,  self).__init__()
+          \end{python}
+
+
 \end{document} 
