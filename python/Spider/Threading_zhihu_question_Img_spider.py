@@ -193,7 +193,7 @@ if __name__ == '__main__':
 
 	img_patton = img_patton = re.compile(r'img.*?src="(https:.*?)".*?data-original="(https:.*?)".*?data-actualsrc="(https:.*?)"')
 
-	for index in xrange(0,10000,20) :   
+	for index in xrange(0,20,20) :   
 		SHARE_Q.put( index )
 
 	for i in xrange(_WORKER_THREAD_NUM) :

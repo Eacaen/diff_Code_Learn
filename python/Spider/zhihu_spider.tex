@@ -42,7 +42,11 @@
 
        【 标号顺序不乱但是内容顺序仍有可能混乱，不一定的按照网页内容了。】
 
-     \subsection{多进程 }
+     \subsection{多进程}
+          \subsubsection{Windows 下多进程无法运行}
+              \textbf{SAD $-\_-$}
+
+              多进程程序在Windows下仍无法运行，在Linux下运行正常。
           \subsubsection{多进程全局变量共享}
               global 变量和Queue模块中的Queue() 在全局变量中貌似不起作用，使用 multiprocessing 中的 各个模块来在进程中同步信号。
                 \begin{python}
@@ -63,6 +67,16 @@ pool.join()
 
 
     \section*{\Large Scrapy---爬虫}
+    \subsection{Windows 下安装问题}
+    windows 下 anaconda 安装会出现
+
+    \begin{python}
+from cryptography.hazmat.bindings._openssl import ffi, lib
+ImportError: DLL load failed
+    \end{python}: 操作系统无法运行 \%1。
+
+     删除了window/system32/ 的 libeay32.dll和ssleay32.dll，不过我的建议是重命名，直接后面加 {\_bak} 就好，免得出什么问题。
+
     \subsection{Scrapy}
       \begin{enumerate}
             \item Scrapy 是一种爬虫框架 / 爬虫引擎， 你需要在里面填上爬虫函数，并对数据下载，提取，处理， 存储。
@@ -75,20 +89,20 @@ pool.join()
       \subsubsection{不使用命令行启动}
           在根目录下创建 main.py 
           \begin{python}
-                from scrapy import cmdline
-                cmdline.execute('scrapy crawl Spider_name'.split())
+from scrapy import cmdline
+cmdline.execute('scrapy crawl Spider_name'.split())
           \end{python}
 
      \subsubsection{ 爬虫开始，结束时传递参数 }
           Scrapy 默认在开始结束时运行：
           \begin{python}
-                def open_spider(self, spider):
-                def close_spider(self, spider):
+def open_spider(self, spider):
+def close_spider(self, spider):
           \end{python}
 
           与Spider.py 中的 Super 结合使用
           \begin{python}
-            super(Spider_name,  self).__init__()
+super(Spider_name,  self).__init__()
           \end{python}
 
 

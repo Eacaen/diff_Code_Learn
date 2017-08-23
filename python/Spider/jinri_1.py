@@ -1,14 +1,11 @@
 # -*- coding:utf-8 -*-
+import urllib2
+import re
 import requests
+import os
 import json
+import multiprocessing
+from multiprocessing import Process, JoinableQueue,Lock ,Queue , Pool , Value
+# import Queue
 
-class mmm(object):
-	"""docstring for mmm"""
-	dd = 'dwedwef'
-	def __init__(self, arg):
-		super(mmm, self).__init__()
-		self.arg = arg
-
-if __name__ == '__main__':
-	n = mmm(6)
-	print mmm.dd
+print 'ss'

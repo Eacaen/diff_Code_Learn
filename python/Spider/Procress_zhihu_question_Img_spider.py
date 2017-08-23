@@ -193,7 +193,7 @@ if __name__ == '__main__':
 
 	img_patton = img_patton = re.compile(r'img.*?src="(https:.*?)".*?data-original="(https:.*?)".*?data-actualsrc="(https:.*?)"')
 
-	for index in xrange(0,10000,20) :   
+	for index in xrange(0,20,20) :   
 		SHARE_Q.put( index )
 
 	pool  = Pool( multiprocessing.cpu_count() )
@@ -203,6 +203,7 @@ if __name__ == '__main__':
   
  		 pool.apply_async(zhihu , ( ques_code , img_patton ))
 
+ 	print 'start'
 	pool.close()#关闭进程池，不再接受新的进程
 	pool.join()#主进程阻塞等待子进程的退出
 
