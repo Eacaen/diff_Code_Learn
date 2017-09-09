@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[UTF8]{ctex}
+\usepackage{extarrows}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage [dvipsnames]{xcolor}
+
+\begin{document}
+\section{Forward propagation} % (fold)
+\label{sec:forward_propagation}
+
+% section forward_propagation (end)
+第 \textit{ l }层的正向函数: \\
+	cost function:
+	\begin{equation}
+	J(w,b) = \frac{1}{m} \sum_{i=1}^m L(\hat{y}^{(1) }, y^{(1)})
+	\end{equation}
+
+	\begin{equation}
+	\begin{split}
+	z_{1}^{[i]} &= w_{1}^{[i]}x + b_{1}^{[i]}  ,  a_{1}^{[i]}   = g_{1}^{[i]}(z_{1}^{[i]}) \\
+	z_{2}^{[i]} &= w_{2}^{[i]}x + b_{2}^{[i]}  ,  a_{2}^{[i]}   = g_{1}^{[i]}(z_{2}^{[i]}) \\
+	z_{3}^{[i]} &= w_{3}^{[i]}x + b_{3}^{[i]}  ,  a_{3}^{[i]}  = g_{3}^{[i]}(z_{3}^{[i]}) \\
+	\end{split}
+	\end{equation}
+
+	After vectorization:
+
+	\begin{gather}
+	\begin{split}
+	[z^{[i]}]
+	=
+	\left[\begin{array}{c}
+		 w_{1}^{[i]}  \\  w_{2}^{[i]}  \\  w_{3}^{[i]}
+	\end{array}\right]
+	X
+	+
+	\left[\begin{array}{c}
+		 b_{1}^{[i]}  \\  b_{2}^{[i]}  \\  b_{3}^{[i]}
+	\end{array}\right]
+	=
+	W^{[i]}X + b^{[i]}
+	\end{split}
+	\end{gather}
+	\begin{gather}
+	\begin{split}
+	[A^{[i]}]
+	=
+	\left[\begin{array}{c}
+		 g_{1}^{[i]}(z_{1}^{[i]})  \\ g_{2}^{[i]}(z_{1}^{[i]})  \\  g_{3}^{[i]}(z_{1}^{[i]})
+	\end{array}\right]
+	\end{split}
+	\end{gather}
+
+\section{Backward propagation} % (fold)
+\label{sec:backward_propagation}
+	反向是对 $J(w,b)$，中的 $w , b$进行反向
+	\begin{equation}
+	\begin{split}
+	dz_{1}^{[i]} &= da_{1}^{[i]'}\times g_{1}^{[i]'}(z_{1}^{[i]}) \\
+	dz_{2}^{[i]} &= da_{2}^{[i]'}\times g_{2}^{[i]'}(z_{2}^{[i]}) \\
+	dz_{3}^{[i]} &= da_{3}^{[i]'}\times g_{3}^{[i]'}(z_{3}^{[i]}) \\
+	\end{split}
+	\end{equation}
+
+	\begin{gather}
+	\begin{split}
+	dZ^{[i]} = \sum_{k=1}^m dz_{k}^{[i]} = 
+ 	dA^{[i]} \times g^{[i]'}(Z^{[i]})
+	\end{split}
+	\end{gather}
+
+	\begin{equation}
+	\begin{split}
+	dw_{1}^{[i]} &= dz_{1}^{[i]'}\times a_{1}^{[i-1]} \\
+	dw_{2}^{[i]} &= dz_{2}^{[i]'}\times a_{2}^{[i-1]} \\
+	dw_{3}^{[i]} &= dz_{3}^{[i]'}\times a_{3}^{[i-1]} \\
+	\end{split}
+	\end{equation}
+
+	\begin{equation}
+	\begin{split}
+	dW^{[i]} &= \frac{1}{m}\sum \frac{\partial{J}}{\partial z}\frac{\partial{z}}{\partial w}\\
+		& = \frac{1}{m}\sum dz^{[i]}a^{[i-1]}\\
+		& = \frac{1}{m}dZ^{[i]}dA^{[i-1]}
+	\end{split}
+	\end{equation}
+
+	\begin{equation}
+	\begin{split}
+	db_{1}^{[i]} &= dz_{1}^{[i]} \\
+	db_{2}^{[i]} &= dz_{2}^{[i]}  \\
+	db_{3}^{[i]} &= dz_{3}^{[i]} \\
+	\end{split}
+	\end{equation}
+
+	\begin{equation}
+	\begin{split}
+	db^{[i]} &= \frac{1}{m}\sum \frac{\partial{J}}{\partial z}\frac{\partial{z}}{\partial b}\\
+		& = \frac{1}{m}\sum dz^{[i]} \\
+		& = \frac{1}{m}np.sum( dZ^{[i]} , axis = 1 , keepdims = True)
+	\end{split}
+	\end{equation}
+
+	\begin{gather}
+	\begin{split}
+	[dA^{[i]}]
+	=
+	\left[\begin{array}{c}
+		 g_{1}^{[i]'}(z_{1}^{[i]})  \\ g_{2}^{[i]'}(z_{1}^{[i]})  \\  g_{3}^{[i]'}(z_{1}^{[i]})
+	\end{array}\right]
+	\end{split}
+	\end{gather}
+	是对矩阵中的各个元素求导\textbf{注意}
+
+% section backward_propagation (end)
+\end{document}
