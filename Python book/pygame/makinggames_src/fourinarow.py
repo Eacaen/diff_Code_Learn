@@ -202,6 +202,11 @@ def getHumanMove(board, isFirstMove):
                 draggingToken = False
         if tokenx != None and tokeny != None:
             drawBoard(board, {'x':tokenx - int(SPACESIZE / 2), 'y':tokeny - int(SPACESIZE / 2), 'color':RED})
+            # DISPLAYSURF.fill(BGCOLOR)
+            # REDTOKENIMG_r = REDTOKENIMG.get_rect()
+            # REDTOKENIMG_r.center = (tokenx, tokeny)
+            # DISPLAYSURF.blit(REDTOKENIMG, REDTOKENIMG_r)
+
         else:
             drawBoard(board)
 
