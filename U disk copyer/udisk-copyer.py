@@ -5,6 +5,7 @@ import os
 import time
 from datetime import datetime
 import shutil
+import re
 
 """全局数据 实时更新"""
 local_device = []  # 本地硬盘
@@ -30,6 +31,7 @@ def updata():
 
     try:
         part = psutil.disk_partitions()
+        print(part)
     except:
         print("程序发生异常!!!")
         sys.exit(-1)
