@@ -115,7 +115,7 @@ def main():
             # from accidentally clicking the same palette twice)
             lastPaletteClicked = paletteClicked
             floodAnimation(mainBoard, paletteClicked)
-            # life -= 1
+            life -= 1
 
             resetGame = False
             if hasWon(mainBoard):
@@ -284,13 +284,13 @@ def flashBorderAnimation(color, board, animationSpeed=30):
     DISPLAYSURF.blit(origSurf, (0, 0)) # redraw the original surface
 
 
-def floodAnimation(board, paletteClicked, animationSpeed=5):
+def floodAnimation(board, paletteClicked, animationSpeed=25):
     origBoard = copy.deepcopy(board)
     floodFill(board, board[0][0], paletteClicked, 0, 0)
 
     for transparency in range(0, 255, animationSpeed):
         # The "new" board slowly become opaque over the original board.
-        # drawBoard(origBoard)
+        drawBoard(origBoard)
         drawBoard(board, transparency)
         pygame.display.update()
         FPSCLOCK.tick(FPS)
@@ -362,9 +362,7 @@ def drawBoard(board, transparency=255):
     for x in range(boardWidth):
         for y in range(boardHeight):
             left, top = leftTopPixelCoordOfBox(x, y)
-            # print left, top
             r, g, b = paletteColors[board[x][y]]
-            # DISPLAYSURF.fill(WHITE)
             pygame.draw.rect(tempSurf, (r, g, b, transparency), (left, top, boxSize, boxSize))
     left, top = leftTopPixelCoordOfBox(0, 0)
     pygame.draw.rect(tempSurf, BLACK, (left-1, top-1, boxSize * boardWidth + 1, boxSize * boardHeight + 1), 1)
@@ -415,7 +413,7 @@ def floodFill(board, oldColor, newColor, x, y):
         return
 
     board[x][y] = newColor # change the color of the current box
-    print x,y
+
     # Make the recursive call for any neighboring boxes:
     if x > 0:
         floodFill(board, oldColor, newColor, x - 1, y) # on box to the left
